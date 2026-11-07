@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ຜົນງານ Graphic Design | Portfolio</title>
+  <meta name="description" content="ເວັບໄຊທ໌ໂຊຜົນງານ Graphic Design: ໂລໂກ້, ໂປສເຕີ, ແບຣນດິ້ງ, ໂຊຊຽວມີເດຍ ແລະ ບັນຈຸພັນ">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+/* ===== Variables / Theme ===== */
+:root {
+  --bg: #0b0b12;
+  --bg-alt: #11111b;
+  --surface: #171724;
+  --text: #f2f2f8;
+  --muted: #9a9ab3;
+  --line: rgba(255, 255, 255, .09);
+  --accent: #ff4d6d;
+  --accent-2: #7c5cff;
+  --accent-3: #22d3ee;
+  --radius: 20px;
+  --font: "Noto Sans Lao", "Space Grotesk", system-ui, sans-serif;
+  --font-en: "Space Grotesk", "Noto Sans Lao", system-ui, sans-serif;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+[data-theme="light"] {
+  --bg: #fbfbfe;
+  --bg-alt: #f1f1f8;
+  --surface: #ffffff;
+  --text: #14141f;
+  --muted: #62627a;
+  --line: rgba(20, 20, 40, .1);
+}
+
+/* ===== Base ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+  transition: background .4s, color .4s;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+img { max-width: 100%; display: block; }
+::selection { background: var(--accent); color: #fff; }
+
+.progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  z-index: 200;
+}
+.cursor-glow {
+  position: fixed; width: 380px; height: 380px; border-radius: 50%;
+  pointer-events: none; z-index: 0; left: 0; top: 0;
+  background: radial-gradient(circle, rgba(124, 92, 255, .18), transparent 65%);
+  transform: translate(-50%, -50%);
+  transition: opacity .3s;
+}
+
+/* ===== Header ===== */
+.header {
+  position: fixed; inset: 0 0 auto 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px clamp(18px, 5vw, 64px);
+  transition: background .3s, backdrop-filter .3s, padding .3s;
+}
+.header.scrolled {
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  padding-block: 10px;
+}
+.logo { font-family: var(--font-en); font-weight: 700; font-size: 1.35rem; letter-spacing: -.02em; }
+.logo span { color: var(--accent); }
+.nav { display: flex; gap: 28px; }
+.nav a { position: relative; color: var(--muted); font-weight: 600; transition: color .2s; }
+.nav a::after {
+  content: ""; position: absolute; left: 0; bottom: -4px; height: 2px; width: 0;
+  background: var(--accent); transition: width .3s var(--ease);
+}
+.nav a:hover, .nav a.active { color: var(--text); }
+.nav a:hover::after, .nav a.active::after { width: 100%; }
+.header-actions { display: flex; gap: 8px; }
+.icon-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--surface);
+  display: grid; place-items: center; font-size: 1.1rem;
+  transition: transform .3s var(--ease), border-color .2s;
+}
+.icon-btn:hover { transform: rotate(25deg) scale(1.06); border-color: var(--accent); }
+.burger { display: none; flex-direction: column; gap: 5px; }
+.burger span { width: 18px; height: 2px; background: var(--text); transition: .3s; }
+.burger.open span:first-child { transform: translateY(3.5px) rotate(45deg); }
+.burger.open span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+
+/* ===== Hero ===== */
+.hero {
+  position: relative; min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 120px clamp(18px, 5vw, 64px) 90px;
+  overflow: hidden;
+}
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; animation: float 14s ease-in-out infinite; }
+.b1 { width: 420px; height: 420px; background: var(--accent); top: -80px; right: -60px; }
+.b2 { width: 360px; height: 360px; background: var(--accent-2); bottom: 40px; left: -100px; animation-delay: -5s; }
+.b3 { width: 260px; height: 260px; background: var(--accent-3); top: 45%; right: 25%; opacity: .3; animation-delay: -9s; }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.1); }
+  66% { transform: translate(-30px, 30px) scale(.92); }
+}
+.hero-inner { position: relative; z-index: 1; max-width: 900px; }
+.eyebrow {
+  font-family: var(--font-en); text-transform: uppercase; letter-spacing: .18em;
+  font-size: .8rem; color: var(--accent); font-weight: 700; margin-bottom: 14px;
+}
+.hero h1 { font-size: clamp(2.4rem, 7vw, 5.4rem); line-height: 1.2; font-weight: 800; letter-spacing: -.01em; }
+.grad {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shine 6s linear infinite;
+}
+@keyframes shine { to { background-position: 250% 0; } }
+.dot { color: var(--accent); }
+.lead { margin: 22px 0 34px; max-width: 560px; color: var(--muted); font-size: 1.12rem; }
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 30px; border-radius: 999px; font-weight: 700;
+  transition: transform .3s var(--ease), box-shadow .3s, background .3s;
+}
+.btn.primary {
+  color: #fff; background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  box-shadow: 0 10px 30px -8px rgba(255, 77, 109, .6);
+}
+.btn.primary:hover { transform: translateY(-3px); box-shadow: 0 16px 36px -8px rgba(124, 92, 255, .7); }
+.btn.ghost { border: 1px solid var(--line); background: var(--surface); }
+.btn.ghost:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+.marquee {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  border-block: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 60%, transparent);
+  backdrop-filter: blur(6px); overflow: hidden; padding: 12px 0;
+}
+.marquee-track { display: flex; width: max-content; animation: scroll 28s linear infinite; }
+.marquee-track span { font-family: var(--font-en); font-weight: 700; letter-spacing: .2em; color: var(--muted); white-space: pre; padding-right: 1ch; }
+@keyframes scroll { to { transform: translateX(-50%); } }
+
+/* ===== Sections ===== */
+.section { position: relative; z-index: 1; padding: clamp(70px, 10vw, 120px) clamp(18px, 5vw, 64px); }
+.section.alt { background: var(--bg-alt); }
+.section-head { margin-bottom: 36px; }
+.section-head h2, .about-text h2 { font-size: clamp(1.9rem, 4.5vw, 3rem); line-height: 1.3; font-weight: 800; }
+
+/* ===== Filters ===== */
+.filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 34px; }
+.chip {
+  padding: 9px 22px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--muted); font-weight: 600;
+  transition: .25s var(--ease);
+}
+.chip:hover { color: var(--text); border-color: var(--accent); }
+.chip.active { color: #fff; background: linear-gradient(120deg, var(--accent), var(--accent-2)); border-color: transparent; }
+
+/* ===== Gallery (masonry) ===== */
+.gallery { column-count: 3; column-gap: 22px; }
+.work {
+  position: relative; break-inside: avoid; margin-bottom: 22px;
+  border-radius: var(--radius); overflow: hidden; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--line);
+  transform-style: preserve-3d;
+  transition: transform .35s var(--ease), box-shadow .35s;
+  animation: pop .55s var(--ease) both;
+}
+@keyframes pop { from { opacity: 0; transform: translateY(24px) scale(.96); } }
+.work:hover { box-shadow: 0 24px 50px -18px rgba(0, 0, 0, .55); }
+.work.hide { display: none; }
+.work .thumb { position: relative; overflow: hidden; }
+.work .thumb > * { transition: transform .7s var(--ease); }
+.work:hover .thumb > * { transform: scale(1.07); }
+.work img { width: 100%; height: 100%; object-fit: cover; }
+.work-cap {
+  position: absolute; inset: auto 0 0 0; padding: 60px 20px 18px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, .75));
+  color: #fff; opacity: 0; transform: translateY(14px);
+  transition: .35s var(--ease);
+}
+.work:hover .work-cap { opacity: 1; transform: none; }
+.work-cap small { font-family: var(--font-en); letter-spacing: .12em; text-transform: uppercase; opacity: .8; }
+.work-cap h3 { font-size: 1.1rem; line-height: 1.4; }
+
+/* Generated placeholder art */
+.art {
+  position: relative; width: 100%; height: 100%; overflow: hidden;
+  background: linear-gradient(135deg, hsl(var(--h1) 85% 58%), hsl(var(--h2) 85% 40%));
+  display: grid; place-items: center;
+}
+.art .s { position: absolute; display: block; }
+.art .s1 { width: 70%; aspect-ratio: 1; border-radius: 50%; background: hsl(var(--h2) 90% 70% / .35); top: -15%; right: -18%; }
+.art .s2 { width: 46%; aspect-ratio: 1; border: 10px solid hsl(var(--h1) 100% 90% / .55); border-radius: 50%; bottom: 8%; left: 8%; }
+.art .s3 { width: 26%; aspect-ratio: 1; background: hsl(0 0% 100% / .85); transform: rotate(18deg); bottom: 16%; right: 16%; border-radius: 6px; }
+.art-t {
+  position: relative; z-index: 1; font-family: var(--font-en); font-weight: 700;
+  font-size: clamp(3rem, 8vw, 5.5rem); color: #fff; text-shadow: 0 8px 30px rgba(0, 0, 0, .3);
+}
+.art--square .s1 { border-radius: 14%; transform: rotate(20deg); }
+.art--square .s2 { border-radius: 12%; }
+.art--tri .s3 { border-radius: 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); background: hsl(0 0% 100% / .8); }
+.art--tri .s1 { border-radius: 40% 60% 55% 45%; }
+
+/* ===== Cards ===== */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px; }
+.card {
+  padding: 30px 26px; border-radius: var(--radius); background: var(--surface);
+  border: 1px solid var(--line); transition: .35s var(--ease);
+}
+.card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 40px -20px rgba(255, 77, 109, .4); }
+.card-ico {
+  width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center;
+  font-size: 1.5rem; color: #fff; margin-bottom: 18px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+.card h3 { margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: .96rem; }
+
+/* ===== About ===== */
+.about { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(30px, 6vw, 80px); align-items: center; }
+.about-art { display: grid; place-items: center; }
+.avatar {
+  width: min(360px, 80%); aspect-ratio: 1; border-radius: 38% 62% 55% 45% / 50% 40% 60% 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2) 60%, var(--accent-3));
+  display: grid; place-items: center; animation: morph 9s ease-in-out infinite;
+  box-shadow: 0 30px 70px -25px rgba(124, 92, 255, .65);
+}
+.avatar span { font-family: var(--font-en); font-size: 4.5rem; font-weight: 700; color: #fff; }
+@keyframes morph {
+  50% { border-radius: 58% 42% 38% 62% / 42% 58% 42% 58%; transform: rotate(6deg); }
+}
+.about-text p { color: var(--muted); margin: 16px 0 26px; }
+.stats { display: flex; gap: clamp(20px, 4vw, 48px); margin-bottom: 26px; }
+.stats strong { display: block; font-family: var(--font-en); font-size: 2.4rem; line-height: 1.1; }
+.stats strong::after { content: "+"; color: var(--accent); }
+.stats span { color: var(--muted); font-size: .9rem; }
+.tools { display: flex; flex-wrap: wrap; gap: 10px; }
+.tools span { padding: 6px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-size: .88rem; font-family: var(--font-en); }
+
+
+/* ===== Profile photo effect ===== */
+.photo-wrap {
+  position: relative; width: min(380px, 82%); aspect-ratio: 4 / 5;
+  transition: transform .25s ease-out; will-change: transform;
+}
+.photo-wrap::before {
+  content: ""; position: absolute; inset: -16px; z-index: 0;
+  border-radius: 38% 62% 55% 45% / 50% 40% 60% 50%;
+  background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+  filter: blur(18px); opacity: .8;
+  animation: spin 7s linear infinite, blobmorph 9s ease-in-out infinite;
+}
+.photo {
+  position: relative; z-index: 1; width: 100%; height: 100%; overflow: hidden;
+  border-radius: 38% 62% 55% 45% / 50% 40% 60% 50%;
+  border: 4px solid var(--bg);
+  background: var(--surface);
+  animation: blobmorph 9s ease-in-out infinite, bob 6s ease-in-out infinite;
+  box-shadow: 0 30px 70px -25px rgba(124, 92, 255, .7);
+}
+.photo img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center top;
+  transform: scale(1.04); transition: transform .8s var(--ease), filter .6s;
+  user-select: none;
+}
+.photo-wrap:hover .photo img { transform: scale(1.12); }
+.photo::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .45) 50%, transparent 65%);
+  transform: translateX(-120%); animation: sweep 5s ease-in-out infinite;
+}
+.orbit {
+  position: absolute; z-index: 2; border-radius: 50%; pointer-events: none;
+}
+.orbit.o1 { width: 22px; height: 22px; background: var(--accent); top: 8%; right: -4%; animation: bob 4s ease-in-out infinite; }
+.orbit.o2 { width: 14px; height: 14px; background: var(--accent-3); bottom: 12%; left: -5%; animation: bob 5s ease-in-out -2s infinite; }
+.float-badge {
+  position: absolute; z-index: 3; padding: 7px 16px; border-radius: 999px;
+  font-family: var(--font-en); font-size: .82rem; font-weight: 700; color: var(--text);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  backdrop-filter: blur(8px); border: 1px solid var(--line);
+  box-shadow: 0 12px 28px -12px rgba(0, 0, 0, .5);
+  animation: bob 5s ease-in-out infinite;
+}
+.fb1 { top: 10%; left: -10%; }
+.fb2 { bottom: 20%; right: -10%; animation-delay: -1.5s; }
+.fb3 { bottom: -3%; left: 14%; animation-delay: -3s; }
+@keyframes spin { to { rotate: 360deg; } }
+@keyframes bob { 50% { translate: 0 -12px; } }
+@keyframes sweep { 0%, 55% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+@keyframes blobmorph {
+  0%, 100% { border-radius: 38% 62% 55% 45% / 50% 40% 60% 50%; }
+  50% { border-radius: 58% 42% 38% 62% / 42% 58% 42% 58%; }
+}
+@media (max-width: 520px) { .fb1 { left: -2%; } .fb2 { right: -2%; } }
+
+/* ===== Contact ===== */
+.contact { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(26px, 5vw, 70px); }
+.contact-info p { color: var(--muted); margin-bottom: 20px; }
+.contact-info li { list-style: none; margin: 10px 0; font-weight: 600; }
+.contact-info a:hover { color: var(--accent); }
+.form { display: grid; gap: 16px; padding: 28px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
+.form label { display: grid; gap: 6px; font-weight: 600; font-size: .9rem; }
+.form input, .form textarea {
+  font: inherit; color: var(--text); padding: 13px 16px; border-radius: 12px;
+  border: 1px solid var(--line); background: var(--bg); resize: vertical;
+  transition: border-color .2s, box-shadow .2s;
+}
+.form input:focus, .form textarea:focus { outline: 0; border-color: var(--accent-2); box-shadow: 0 0 0 4px rgba(124, 92, 255, .2); }
+
+/* ===== Footer ===== */
+.footer {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  padding: 28px clamp(18px, 5vw, 64px); border-top: 1px solid var(--line);
+  color: var(--muted); font-size: .9rem; position: relative; z-index: 1;
+}
+.to-top:hover { color: var(--accent); }
+
+/* ===== Lightbox ===== */
+.lightbox {
+  position: fixed; inset: 0; z-index: 300; display: grid; place-items: center;
+  background: rgba(5, 5, 10, .86); backdrop-filter: blur(10px);
+  opacity: 0; visibility: hidden; transition: .35s;
+}
+.lightbox.open { opacity: 1; visibility: visible; }
+.lb-content {
+  width: min(1000px, 92vw); max-height: 90vh; overflow: auto;
+  display: grid; grid-template-columns: 1.4fr 1fr; border-radius: 24px;
+  background: var(--surface); border: 1px solid var(--line);
+  transform: scale(.94); transition: transform .4s var(--ease);
+}
+.lightbox.open .lb-content { transform: none; }
+.lb-media { height: min(84vh, 760px); min-height: 0; }
+.lb-media { background: #0a0a12; display: grid; place-items: center; }
+.lb-media img { width: 100%; height: 100%; object-fit: contain; }
+.lb-info { padding: 34px 28px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+.lb-cat { font-family: var(--font-en); text-transform: uppercase; letter-spacing: .16em; font-size: .75rem; color: var(--accent); font-weight: 700; }
+.lb-info h3 { font-size: 1.6rem; line-height: 1.3; }
+.lb-info p { color: var(--muted); }
+.lb-info dl { display: grid; gap: 10px; margin-top: 10px; padding-top: 16px; border-top: 1px solid var(--line); }
+.lb-info dl div { display: flex; justify-content: space-between; gap: 12px; }
+.lb-info dt { color: var(--muted); }
+.lb-info dd { font-weight: 600; text-align: right; }
+.lb-close, .lb-nav {
+  position: absolute; width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(255, 255, 255, .1); color: #fff; font-size: 1.4rem;
+  display: grid; place-items: center; transition: background .2s, transform .2s;
+}
+.lb-close { top: 20px; right: 20px; }
+.lb-nav { top: 50%; transform: translateY(-50%); }
+.lb-nav.prev { left: 18px; } .lb-nav.next { right: 18px; }
+.lb-close:hover, .lb-nav:hover { background: var(--accent); }
+
+/* ===== Reveal on scroll ===== */
+.reveal { opacity: 0; transform: translateY(34px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ===== Responsive ===== */
+@media (max-width: 960px) {
+  .gallery { column-count: 2; }
+  .about, .contact { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .burger { display: flex; }
+  .nav {
+    position: fixed; inset: 64px 14px auto 14px; flex-direction: column; gap: 4px;
+    padding: 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line);
+    opacity: 0; visibility: hidden; transform: translateY(-10px); transition: .3s var(--ease);
+  }
+  .nav.open { opacity: 1; visibility: visible; transform: none; }
+  .nav a { padding: 10px 12px; }
+  .lb-content { grid-template-columns: 1fr; }
+  .lb-media { height: 55vh; }
+  .lb-nav { top: auto; bottom: 18px; transform: none; }
+}
+@media (max-width: 520px) {
+  .gallery { column-count: 1; }
+  .stats { flex-wrap: wrap; }
+}
+@media (hover: none) {
+  .cursor-glow { display: none; }
+  .work-cap { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+</style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- ===== Header ===== -->
+  <header class="header" id="header">
+    <a href="#home" class="logo">Design<span>.</span>Studio</a>
+    <nav class="nav" id="nav">
+      <a href="#works">ຜົນງານ</a>
+      <a href="#services">ບໍລິການ</a>
+      <a href="#about">ກ່ຽວກັບ</a>
+      <a href="#contact">ຕິດຕໍ່</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="themeBtn" aria-label="ປ່ຽນໂຫມດສີ">◐</button>
+      <button class="icon-btn burger" id="burger" aria-label="ເມນູ"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="home">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+      <div class="hero-inner">
+        <p class="eyebrow reveal">Graphic Designer · Pakse, Laos</p>
+        <h1 class="reveal">
+          ສ້າງສັນ<span class="grad"> ໜ້າຕາ</span><br>
+          ໃຫ້ແບຣນຂອງທ່ານ<span class="dot">.</span>
+        </h1>
+        <p class="lead reveal">ຂ້ອຍອອກແບບໂລໂກ້, ໂປສເຕີ, ແບຣນດິ້ງ ແລະ ສື່ໂຄສະນາ ທີ່ສວຍ ແລະ ເວົ້າແທນແບຣນຂອງທ່ານໄດ້.</p>
+        <div class="hero-cta reveal">
+          <a href="#works" class="btn primary">ເບິ່ງຜົນງານ</a>
+          <a href="#contact" class="btn ghost">ຈ້າງຂ້ອຍ →</a>
+        </div>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>LOGO ✦ POSTER ✦ BRANDING ✦ SOCIAL MEDIA ✦ PACKAGING ✦ ILLUSTRATION ✦ </span>
+          <span>LOGO ✦ POSTER ✦ BRANDING ✦ SOCIAL MEDIA ✦ PACKAGING ✦ ILLUSTRATION ✦ </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Works ===== -->
+    <section class="section" id="works">
+      <div class="section-head reveal">
+        <p class="eyebrow">Selected Work</p>
+        <h2>ຜົນງານເດັ່ນ</h2>
+      </div>
+      <div class="filters reveal" id="filters" role="tablist">
+        <button class="chip active" data-filter="all">ທັງໝົດ</button>
+        <button class="chip" data-filter="food">ອາຫານ & ເຄື່ອງດື່ມ</button>
+        <button class="chip" data-filter="finance">ສິນເຊື່ອ & ເຄື່ອງປະດັບ</button>
+        <button class="chip" data-filter="shop">ຮ້ານຄ້າ & ບໍລິການ</button>
+        <button class="chip" data-filter="phone">ມືຖື</button>
+        <button class="chip" data-filter="build">ວັດສະດຸກໍ່ສ້າງ</button>
+        <button class="chip" data-filter="notice">ປ້າຍປະກາດ & ງານບຸນ</button>
+      </div>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- ===== Services ===== -->
+    <section class="section alt" id="services">
+      <div class="section-head reveal">
+        <p class="eyebrow">What I Do</p>
+        <h2>ບໍລິການ</h2>
+      </div>
+      <div class="cards">
+        <article class="card reveal">
+          <div class="card-ico">✺</div>
+          <h3>ອອກແບບໂລໂກ້</h3>
+          <p>ສັນຍາລັກທີ່ຈື່ງ່າຍ ເຂົ້າກັບບຸກຄະລິກຂອງແບຣນ ພ້ອມໄຟລ໌ທຸກຮູບແບບ.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card-ico">▣</div>
+          <h3>ແບຣນດິ້ງ</h3>
+          <p>ຊຸດອັດຕະລັກ ສີ ຕົວອັກສອນ ແລະ ແນວທາງການໃຊ້ແບບຄົບຊຸດ.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card-ico">✎</div>
+          <h3>ໂປສເຕີ & ສື່ພິມ</h3>
+          <p>ໃບປິວ, ໂປສເຕີ, ແບນເນີ ແລະ ແຄັດຕາລອກ ພ້ອມພິມໄດ້ທັນທີ.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card-ico">❖</div>
+          <h3>ສື່ໂຊຊຽວມີເດຍ</h3>
+          <p>ໂພສ, ສະໂຕຣີ ແລະ ແບນເນີ ທີ່ໂດດເດັ່ນ ໃນຟີດຂອງລູກຄ້າ.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section class="section" id="about">
+      <div class="about">
+        <div class="about-art reveal">
+          <div class="photo-wrap" id="photoWrap">
+            <span class="orbit o1"></span><span class="orbit o2"></span>
+            <div class="photo">
+              <img src="full/1111-2.jpg"false">
+            </div>
+            <span class="float-badge fb1">✦ Illustrator</span>
+            <span class="float-badge fb2">Photoshop</span>
+            <span class="float-badge fb3">Figma</span>
+          </div>
+        </div>
+        <div class="about-text reveal">
+          <p class="eyebrow">About Me</p>
+          <h2>ສະບາຍດີ, ຂ້ອຍແມ່ນນັກອອກແບບ</h2>
+          <p>ຂ້ອຍມັກປ່ຽນໄອເດຍໃຫ້ເປັນພາບ. ມີປະສົບການດ້ານ Graphic Design ທີ່ເນັ້ນຄວາມລຽບງ່າຍ ຊັດເຈນ ແລະ ມີເອກະລັກ. ເຄື່ອງມືຫຼັກ: Adobe Illustrator, Photoshop ແລະ Figma.</p>
+          <div class="stats">
+            <div><strong data-count="100">0</strong><span>ໂປຣເຈັກ</span></div>
+            <div><strong data-count="40">0</strong><span>ລູກຄ້າ</span></div>
+            <div><strong data-count="1">0</strong><span>ປີປະສົບການ</span></div>
+          </div>
+          <div class="tools">
+            <span>Illustrator</span><span>Photoshop</span><span>Figma</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section class="section alt" id="contact">
+      <div class="section-head reveal">
+        <p class="eyebrow">Get In Touch</p>
+        <h2>ມາສ້າງງານນຳກັນ</h2>
+      </div>
+      <div class="contact">
+        <div class="contact-info reveal">
+          <p>ມີໂປຣເຈັກໃນໃຈ? ບອກລາຍລະອຽດມາໄດ້ເລີຍ ຂ້ອຍຈະຕອບກັບພາຍໃນ 24 ຊົ່ວໂມງ.</p>
+          <ul>
+            <li>✉ <a href="mailto:hello@example.com">bobbiepks@gmail.com</a></li>
+            <li>☎ <a href="tel:+85620XXXXXXXX">020 94 240 430</a></li>
+            <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg> <a href="https://wa.me/8562094240430" target="_blank" rel="noopener">020 94 240 430</a></li>
+            <li>⌖ ປາກເຊ, ລາວ</li>
+          </ul>
+        </div>
+        <form class="form reveal" id="contactForm">
+          <label>ຊື່<input type="text" name="name" required placeholder="ຊື່ຂອງທ່ານ"></label>
+          <label>ອີເມວ<input type="email" name="email" required placeholder="you@email.com"></label>
+          <label>ຂໍ້ຄວາມ<textarea name="msg" rows="4" required placeholder="ບອກກ່ຽວກັບໂປຣເຈັກຂອງທ່ານ..."></textarea></label>
+          <button class="btn primary" type="submit">ສົ່ງຂໍ້ຄວາມ</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Design.Studio — ສະຫງວນລິຂະສິດ</p>
+    <a href="#home" class="to-top">ຂຶ້ນເທິງ ↑</a>
+    <p>ຜູ້ເຂົ້າຊົມ: <strong id="visitCount">–</strong> ຄົນ</p>
+  </footer>
+
+  <!-- ===== Lightbox ===== -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-close" id="lbClose" aria-label="ປິດ">✕</button>
+    <button class="lb-nav prev" id="lbPrev" aria-label="ກ່ອນໜ້າ">‹</button>
+    <button class="lb-nav next" id="lbNext" aria-label="ຖັດໄປ">›</button>
+    <div class="lb-content">
+      <div class="lb-media" id="lbMedia"></div>
+      <div class="lb-info">
+        <span class="lb-cat" id="lbCat"></span>
+        <h3 id="lbTitle"></h3>
+        <p id="lbDesc"></p>
+        <dl>
+          <div><dt>ຂະໜາດ</dt><dd id="lbYear"></dd></div>
+          <div><dt>ໝວດ</dt><dd id="lbTools"></dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <script>
+/* =====================================================
+   ຂໍ້ມູນຜົນງານ — ແກ້ໄຂສ່ວນນີ້ເພື່ອໃສ່ຜົນງານຂອງທ່ານ
+   - img: ຮູບຍ່ອ (ສະແດງໃນແກລເລີ)   - full: ຮູບໃຫຍ່ (ສະແດງຕອນກົດເບິ່ງ)
+   - cat: food | finance | shop | phone | build | notice
+   ===================================================== */
+const CATEGORIES = {
+  food: "ອາຫານ & ເຄື່ອງດື່ມ", finance: "ສິນເຊື່ອ & ເຄື່ອງປະດັບ", shop: "ຮ້ານຄ້າ & ບໍລິການ",
+  phone: "ມືຖື & ເອເລັກໂຕຣນິກ", build: "ວັດສະດຸກໍ່ສ້າງ", notice: "ປ້າຍປະກາດ & ງານບຸນ"
+};
+
+const works = [
+  { title: "ປ້າຍສິນເຊື່ອ — ເປັນຫຍັງຕ້ອງເລືອກເຮົາ (2)", cat: "finance", size: "113 × 92 ຊມ", img: "thumb/z1_113x92-07.jpg", full: "full/z1_113x92-07.jpg", ratio: "640/521" },
+  { title: "ປ້າຍຮ້ານຢຳຫູໝູ", cat: "food", size: "80 × 110 ຊມ", img: "thumb/z2_80x110.jpg", full: "full/z2_80x110.jpg", ratio: "465/640" },
+  { title: "ປ້າຍສິນເຊື່ອດ່ວນ (1)", cat: "finance", size: "113 × 74 ຊມ", img: "thumb/z1_113x74-01.jpg", full: "full/z1_113x74-01.jpg", ratio: "640/419" },
+  { title: "ປ້າຍຮ້ານອາຫານ", cat: "food", size: "365 × 75 ຊມ", img: "thumb/z3_365x75.jpg", full: "full/z3_365x75.jpg", ratio: "640/139" },
+  { title: "ປ້າຍຮ້ານເສີມສວຍ Quynh Huong", cat: "shop", size: "100 × 150 ຊມ", img: "thumb/z3_100x150.jpg", full: "full/z3_100x150.jpg", ratio: "427/640" },
+  { title: "ປ້າຍວັດສະດຸ — ສັງກະສີ", cat: "build", size: "150 × 200 ຊມ", img: "thumb/z3_150x200-01.jpg", full: "full/z3_150x200-01.jpg", ratio: "480/640" },
+  { title: "ປ້າຍຮ້ານເຄື່ອງດື່ມ (2)", cat: "food", size: "110 × 75 ຊມ", img: "thumb/z2_110x75.jpg", full: "full/z2_110x75.jpg", ratio: "640/407" },
+  { title: "ປ້າຍຮ້ານຕັດຫຍິບ", cat: "shop", size: "120 × 170 ຊມ", img: "thumb/z1_120x170cm-01.jpg", full: "full/z1_120x170cm-01.jpg", ratio: "452/640" },
+  { title: "ປ້າຍໂຄສະນາ ຮ້ານສ້ອມມືຖື IS Smart phone", cat: "phone", size: "100 × 140 ຊມ", img: "thumb/z1_100x140.jpg", full: "full/z1_100x140.jpg", ratio: "457/640" },
+  { title: "ປ້າຍໂຮງຮຽນ ປອດຢາເສບຕິດ (2)", cat: "notice", size: "150 × 80 ຊມ", img: "thumb/z1_150x80-02.jpg", full: "full/z1_150x80-02.jpg", ratio: "640/342" },
+  { title: "ປ້າຍຮ້ານຊັກຜ້າ ຊັກ-ອົບ-ແຫ້ງ", cat: "shop", size: "300 × 120 ຊມ", img: "thumb/z1_300x120cm.jpg", full: "full/z1_300x120cm.jpg", ratio: "640/256" },
+  { title: "ປ້າຍສິນເຊື່ອ — ຂັ້ນຕອນງ່າຍ (2)", cat: "finance", size: "113 × 74 ຊມ", img: "thumb/z1_113x74-02.jpg", full: "full/z1_113x74-02.jpg", ratio: "640/419" },
+  { title: "ປ້າຍສິນເຊື່ອ — ຂັ້ນຕອນງ່າຍ (1)", cat: "finance", size: "110 × 80 ຊມ", img: "thumb/z1_110x80.jpg", full: "full/z1_110x80.jpg", ratio: "640/465" },
+  { title: "ປ້າຍຮ້ານເຄື່ອງດື່ມ (1)", cat: "food", size: "100 × 30 ຊມ", img: "thumb/z2_100x30.jpg", full: "full/z2_100x30.jpg", ratio: "640/175" },
+  { title: "ເມນູອາຫານ A4", cat: "food", size: "A4", img: "thumb/z3_A4-02.jpg", full: "full/z3_A4-02.jpg", ratio: "453/640" },
+  { title: "ປ້າຍວັດສະດຸ — ເຫຼັກ", cat: "build", size: "150 × 200 ຊມ", img: "thumb/z3_150x200-02.jpg", full: "full/z3_150x200-02.jpg", ratio: "480/640" },
+  { title: "ປ້າຍໂຮງຮຽນ ປອດຢາເສບຕິດ (1)", cat: "notice", size: "150 × 80 ຊມ", img: "thumb/z1_150x80.jpg", full: "full/z1_150x80.jpg", ratio: "640/341" },
+  { title: "ເມນູເຄື່ອງດື່ມ", cat: "food", size: "40 × 40 ຊມ", img: "thumb/z2_40x40-01.jpg", full: "full/z2_40x40-01.jpg", ratio: "640/640" },
+  { title: "ປ້າຍ Maha Heng Frozen Foods", cat: "food", size: "200 × 120 ຊມ", img: "thumb/z1_200x120.jpg", full: "full/z1_200x120.jpg", ratio: "640/384" },
+  { title: "ສະແຕນດີ PCS", cat: "shop", size: "80 × 120 ຊມ", img: "thumb/z2_80x120-02.jpg", full: "full/z2_80x120-02.jpg", ratio: "427/640" },
+  { title: "ປ້າຍອູ່ສ້ອມແປງລົດໃຫຍ່", cat: "shop", size: "150 × 200 ຊມ", img: "thumb/z1_150x200.jpg", full: "full/z1_150x200.jpg", ratio: "480/640" },
+  { title: "ເມນູອາຫານ (ປ້າຍໃຫຍ່)", cat: "food", size: "140 × 100 ຊມ", img: "thumb/z2_140x100.jpg", full: "full/z2_140x100.jpg", ratio: "640/457" },
+  { title: "ປ້າຍຂາຍເບ້ຍຢາງພາລາ", cat: "shop", size: "100 × 100 ຊມ", img: "thumb/z2_100x100.jpg", full: "full/z2_100x100.jpg", ratio: "640/640" },
+  { title: "ປ້າຍງານບຸນແຂ່ງເຮືອ", cat: "notice", size: "600 × 200 ຊມ", img: "thumb/z2_600x200.jpg", full: "full/z2_600x200.jpg", ratio: "640/213" },
+  { title: "ສະແຕນດີ Food Selection", cat: "food", size: "80 × 120 ຊມ", img: "thumb/z2_80x120-01.jpg", full: "full/z2_80x120-01.jpg", ratio: "427/640" },
+  { title: "ປ້າຍແອນນາ ໂມບາຍ (2)", cat: "phone", size: "600 × 300 ຊມ", img: "thumb/z3_600x300.jpg", full: "full/z3_600x300.jpg", ratio: "640/320" },
+  { title: "ປ້າຍຮ້ານ ລັດສະໝີ (4)", cat: "shop", size: "440 × 40 ຊມ", img: "thumb/z2_440x40.jpg", full: "full/z2_440x40.jpg", ratio: "640/56" },
+  { title: "ປ້າຍຮ້ານ ລັດສະໝີ (3)", cat: "shop", size: "340 × 40 ຊມ", img: "thumb/z2_340x40.jpg", full: "full/z2_340x40.jpg", ratio: "640/75" },
+  { title: "ປ້າຍແຈ້ງການ", cat: "notice", size: "150 × 100 ຊມ", img: "thumb/z1_150x100.jpg", full: "full/z1_150x100.jpg", ratio: "640/427" },
+  { title: "ປ້າຍອາຫານແຊ່ແຂງ ATM (1)", cat: "food", size: "100 × 60 ຊມ", img: "thumb/z1_100x60-01.jpg", full: "full/z1_100x60-01.jpg", ratio: "640/384" },
+  { title: "ປ້າຍຮ້ານຕຳໝາກຫຸ່ງ", cat: "food", size: "400 × 80 ຊມ", img: "thumb/z2_400x80.jpg", full: "full/z2_400x80.jpg", ratio: "640/128" },
+  { title: "ປ້າຍໃບລ່າວ ງານບຸນ", cat: "notice", size: "217 × 130 ຊມ", img: "thumb/z2_217x130.jpg", full: "full/z2_217x130.jpg", ratio: "640/383" },
+  { title: "ປ້າຍຮ້ານ ມາດາມປາ", cat: "shop", size: "500 × 120 ຊມ", img: "thumb/z3_500x120.jpg", full: "full/z3_500x120.jpg", ratio: "640/149" },
+  { title: "ປ້າຍຮ້ານຊັກອົບ 24 ຊົ່ວໂມງ (ວົງມົນ)", cat: "shop", size: "100 × 100 ຊມ", img: "thumb/z3_100x100.jpg", full: "full/z3_100x100.jpg", ratio: "640/638" },
+  { title: "ປ້າຍສິນເຊື່ອດ່ວນ (2)", cat: "finance", size: "115 × 117 ຊມ", img: "thumb/z1_115x117.jpg", full: "full/z1_115x117.jpg", ratio: "629/640" },
+  { title: "ປ້າຍສິນເຊື່ອ — ເປັນຫຍັງຕ້ອງເລືອກເຮົາ (1)", cat: "finance", size: "110 × 105 ຊມ", img: "thumb/z1_110x105.jpg", full: "full/z1_110x105.jpg", ratio: "640/611" },
+  { title: "ປ້າຍຮ້ານ ລັດສະໝີ (1)", cat: "shop", size: "310 × 120 ຊມ", img: "thumb/z2_310x120.jpg", full: "full/z2_310x120.jpg", ratio: "640/248" },
+  { title: "ສະແຕນດີ Tyson", cat: "shop", size: "80 × 120 ຊມ", img: "thumb/z2_80x120-04.jpg", full: "full/z2_80x120-04.jpg", ratio: "427/640" },
+  { title: "ສະແຕນດີ ໂປຣໂມຊັນ iPhone", cat: "phone", size: "60 × 150 ຊມ", img: "thumb/z2_60x150.jpg", full: "full/z2_60x150.jpg", ratio: "256/640" },
+  { title: "ປ້າຍໂຄສະນາ ຮ້ານບໍລິການ", cat: "shop", size: "300 × 100 ຊມ", img: "thumb/z2_300x100.jpg", full: "full/z2_300x100.jpg", ratio: "640/213" },
+  { title: "ປ້າຍຮ້ານຊັກຜ້າ — ເປີດແລ້ວ", cat: "shop", size: "80 × 100 ຊມ", img: "thumb/z2_80x100.jpg", full: "full/z2_80x100.jpg", ratio: "512/640" },
+  { title: "ປ້າຍສິນເຊື່ອ — ເຄື່ອງປະດັບ ເພັດ ທອງ", cat: "finance", size: "115 × 74 ຊມ", img: "thumb/z1_115x74.jpg", full: "full/z1_115x74.jpg", ratio: "640/412" },
+  { title: "ປ້າຍວັດສະດຸ — ໄມ້ຝາ", cat: "build", size: "150 × 200 ຊມ", img: "thumb/z3_150x200-03.jpg", full: "full/z3_150x200-03.jpg", ratio: "480/640" },
+  { title: "ປ້າຍຮ້ານຊັກຜ້າ 24 ຊົ່ວໂມງ (1)", cat: "shop", size: "400 × 120 ຊມ", img: "thumb/z1_400x120cm.jpg", full: "full/z1_400x120cm.jpg", ratio: "640/192" },
+  { title: "ປ້າຍຮ້ານຊັກຜ້າ 24 ຊົ່ວໂມງ (2)", cat: "shop", size: "450 × 120 ຊມ", img: "thumb/z1_450x120cm.jpg", full: "full/z1_450x120cm.jpg", ratio: "640/171" },
+  { title: "ປ້າຍ ຮັບຈຳນຳ ຮັບຈຳນອງ (1)", cat: "finance", size: "108 × 103 ຊມ", img: "thumb/z1_108x103.jpg", full: "full/z1_108x103.jpg", ratio: "640/610" },
+  { title: "ປ້າຍອາຫານແຊ່ແຂງ ATM (2)", cat: "food", size: "100 × 60 ຊມ", img: "thumb/z1_100x60-02.jpg", full: "full/z1_100x60-02.jpg", ratio: "640/384" },
+  { title: "ປ້າຍ ຮັບຈຳນຳ ຮັບຈຳນອງ (2)", cat: "finance", size: "113 × 92 ຊມ", img: "thumb/z1_113x92-08.jpg", full: "full/z1_113x92-08.jpg", ratio: "640/521" },
+  { title: "ປ້າຍຮ້ານເຂົ້າໜຽວໝູທອດ", cat: "food", size: "200 × 100 ຊມ", img: "thumb/z2_200x100-02.jpg", full: "full/z2_200x100-02.jpg", ratio: "640/320" },
+  { title: "ປ້າຍຮ້ານຂາຍຂອງກິນສຸກ (2)", cat: "food", size: "200 × 70 ຊມ", img: "thumb/z3_200x70.jpg", full: "full/z3_200x70.jpg", ratio: "640/224" },
+  { title: "ປ້າຍຮ້ານ ລັດສະໝີ (2)", cat: "shop", size: "330 × 40 ຊມ", img: "thumb/z2_330x40.jpg", full: "full/z2_330x40.jpg", ratio: "640/78" },
+  { title: "ປ້າຍຮ້ານນ້ຳດື່ມ ແລະ ມືຖື", cat: "shop", size: "250 × 150 ຊມ", img: "thumb/z1_250x150.jpg", full: "full/z1_250x150.jpg", ratio: "640/384" },
+  { title: "ປ້າຍຮ້ານຊັກຜ້າ Super Clean", cat: "shop", size: "108 × 176 ຊມ", img: "thumb/z1_108x176.jpg", full: "full/z1_108x176.jpg", ratio: "393/640" },
+  { title: "ປ້າຍບໍລິສັດ Soukchay", cat: "shop", size: "240 × 150 ຊມ", img: "thumb/z2_240x150.jpg", full: "full/z2_240x150.jpg", ratio: "640/400" },
+  { title: "ປ້າຍແອນນາ ໂມບາຍ (1)", cat: "phone", size: "120 × 150 ຊມ", img: "thumb/z3_120x150.jpg", full: "full/z3_120x150.jpg", ratio: "512/640" },
+  { title: "ປ້າຍອາຫານແຊ່ແຂງ ATM (4)", cat: "food", size: "100 × 60 ຊມ", img: "thumb/z1_100x60-05.jpg", full: "full/z1_100x60-05.jpg", ratio: "640/384" },
+  { title: "ປ້າຍອາຫານແຊ່ແຂງ ATM (3)", cat: "food", size: "100 × 60 ຊມ", img: "thumb/z1_100x60-04.jpg", full: "full/z1_100x60-04.jpg", ratio: "640/384" },
+  { title: "ເມນູອາຫານ", cat: "food", size: "40 × 40 ຊມ", img: "thumb/z2_40x40-02.jpg", full: "full/z2_40x40-02.jpg", ratio: "640/640" },
+  { title: "ປ້າຍຮ້ານຂາຍຂອງກິນສຸກ (1)", cat: "food", size: "313 × 90 ຊມ", img: "thumb/z1_313x90.jpg", full: "full/z1_313x90.jpg", ratio: "640/184" },
+  { title: "ປ້າຍສິນເຊື່ອ — ເຄື່ອງໃຊ້ໄຟຟ້າ", cat: "finance", size: "110 × 92 ຊມ", img: "thumb/z1_110x92.jpg", full: "full/z1_110x92.jpg", ratio: "640/535" },
+  { title: "ເມນູເຄື່ອງດື່ມ A4", cat: "food", size: "A4", img: "thumb/z3_A4-01.jpg", full: "full/z3_A4-01.jpg", ratio: "453/640" },
+  { title: "ປ້າຍໂຮງຮຽນ ປອດຢາເສບຕິດ (3)", cat: "notice", size: "150 × 80 ຊມ", img: "thumb/z1_150x80-03.jpg", full: "full/z1_150x80-03.jpg", ratio: "640/342" }
+];
+
+/* ================= Helpers ================= */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+
+function mediaHTML(w, big) {
+  return `<img src="${big ? w.full : w.img}" alt="${w.title}" loading="${big ? "eager" : "lazy"}" decoding="async">`;
+}
+
+/* ================= Gallery ================= */
+const gallery = $("#gallery");
+gallery.innerHTML = works.map((w, i) => `
+  <article class="work" data-cat="${w.cat}" data-index="${i}" tabindex="0" style="animation-delay:${Math.min(i, 12) * 60}ms">
+    <div class="thumb" style="aspect-ratio:${w.ratio}">${mediaHTML(w)}</div>
+    <div class="work-cap"><small>${CATEGORIES[w.cat]}</small><h3>${w.title}</h3></div>
+  </article>`).join("");
+
+let activeFilter = "all";
+$("#filters").addEventListener("click", e => {
+  const chip = e.target.closest(".chip");
+  if (!chip) return;
+  $$(".chip").forEach(c => c.classList.remove("active"));
+  chip.classList.add("active");
+  activeFilter = chip.dataset.filter;
+  $$(".work").forEach((el, i) => {
+    const show = activeFilter === "all" || el.dataset.cat === activeFilter;
+    el.classList.toggle("hide", !show);
+    if (show) { el.style.animation = "none"; void el.offsetWidth; el.style.animation = `pop .55s var(--ease) ${Math.min(i, 12) * 40}ms both`; }
+  });
+});
+
+/* 3D tilt on hover (ສະເພາະອຸປະກອນທີ່ມີເມົ້າ) */
+if (matchMedia("(hover:hover)").matches) {
+  $$(".work").forEach(card => {
+    card.addEventListener("mousemove", e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5;
+      const y = (e.clientY - r.top) / r.height - .5;
+      card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px)`;
+    });
+    card.addEventListener("mouseleave", () => card.style.transform = "");
+  });
+}
+
+/* ================= Lightbox ================= */
+const lb = $("#lightbox");
+let current = 0;
+const visibleIndexes = () => $$(".work:not(.hide)").map(el => +el.dataset.index);
+
+function openLB(i) {
+  current = i;
+  const w = works[i];
+  $("#lbMedia").innerHTML = mediaHTML(w, true);
+  $("#lbCat").textContent = CATEGORIES[w.cat];
+  $("#lbTitle").textContent = w.title;
+  $("#lbDesc").textContent = "ຜົນງານອອກແບບ ແລະ ພິມປ້າຍ";
+  $("#lbYear").textContent = w.size;
+  $("#lbTools").textContent = CATEGORIES[w.cat];
+  lb.classList.add("open");
+  lb.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+function closeLB() {
+  lb.classList.remove("open");
+  lb.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+function stepLB(dir) {
+  const list = visibleIndexes();
+  const pos = list.indexOf(current);
+  openLB(list[(pos + dir + list.length) % list.length]);
+}
+gallery.addEventListener("click", e => {
+  const card = e.target.closest(".work");
+  if (card) openLB(+card.dataset.index);
+});
+gallery.addEventListener("keydown", e => {
+  if (e.key === "Enter") { const c = e.target.closest(".work"); if (c) openLB(+c.dataset.index); }
+});
+$("#lbClose").addEventListener("click", closeLB);
+$("#lbPrev").addEventListener("click", () => stepLB(-1));
+$("#lbNext").addEventListener("click", () => stepLB(1));
+lb.addEventListener("click", e => { if (e.target === lb) closeLB(); });
+document.addEventListener("keydown", e => {
+  if (!lb.classList.contains("open")) return;
+  if (e.key === "Escape") closeLB();
+  if (e.key === "ArrowLeft") stepLB(-1);
+  if (e.key === "ArrowRight") stepLB(1);
+});
+
+/* ================= Reveal + counters ================= */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    en.target.classList.add("in");
+    io.unobserve(en.target);
+  });
+}, { threshold: .15 });
+$$(".reveal").forEach((el, i) => { el.style.transitionDelay = `${(i % 4) * 90}ms`; io.observe(el); });
+
+const counterIO = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    const el = en.target, end = +el.dataset.count, t0 = performance.now(), dur = 1400;
+    const tick = t => {
+      const p = Math.min((t - t0) / dur, 1);
+      el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    counterIO.unobserve(el);
+  });
+}, { threshold: .6 });
+$$("[data-count]").forEach(el => counterIO.observe(el));
+
+/* ================= Header, progress, nav ================= */
+const header = $("#header"), progress = $("#progress");
+const sections = $$("main section[id]"), navLinks = $$(".nav a");
+function onScroll() {
+  const y = window.scrollY, h = document.documentElement.scrollHeight - innerHeight;
+  progress.style.width = (h > 0 ? (y / h) * 100 : 0) + "%";
+  header.classList.toggle("scrolled", y > 30);
+  let cur = "";
+  sections.forEach(s => { if (y >= s.offsetTop - 140) cur = s.id; });
+  navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + cur));
+}
+addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+
+const burger = $("#burger"), nav = $("#nav");
+burger.addEventListener("click", () => {
+  burger.classList.toggle("open");
+  nav.classList.toggle("open");
+});
+navLinks.forEach(a => a.addEventListener("click", () => { burger.classList.remove("open"); nav.classList.remove("open"); }));
+
+/* ================= Theme ================= */
+const root = document.documentElement;
+try {
+  const saved = localStorage.getItem("theme");
+  if (saved) root.dataset.theme = saved;
+} catch (_) {}
+$("#themeBtn").addEventListener("click", () => {
+  const next = root.dataset.theme === "light" ? "dark" : "light";
+  root.dataset.theme = next;
+  try { localStorage.setItem("theme", next); } catch (_) {}
+});
+
+/* ================= Cursor glow ================= */
+const glow = $("#cursorGlow");
+addEventListener("pointermove", e => { glow.style.left = e.clientX + "px"; glow.style.top = e.clientY + "px"; });
+
+/* ================= Contact form (mailto) ================= */
+$("#contactForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const f = new FormData(e.target);
+  const subject = encodeURIComponent("ຕິດຕໍ່ຈາກເວັບໄຊທ໌: " + f.get("name"));
+  const body = encodeURIComponent(`${f.get("msg")}\n\n— ${f.get("name")} (${f.get("email")})`);
+  location.href = `mailto:hello@example.com?subject=${subject}&body=${body}`;
+});
+
+/* ================= Profile photo tilt ================= */
+(() => {
+  const wrap = $("#photoWrap");
+  if (!wrap || !matchMedia("(hover:hover)").matches) return;
+  const zone = wrap.parentElement;
+  zone.addEventListener("mousemove", e => {
+    const r = zone.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5;
+    const y = (e.clientY - r.top) / r.height - .5;
+    wrap.style.transform = `perspective(900px) rotateY(${x * 14}deg) rotateX(${-y * 14}deg)`;
+  });
+  zone.addEventListener("mouseleave", () => wrap.style.transform = "");
+})();
+
+$("#year").textContent = new Date().getFullYear();
+
+
+
+/* ================= Visitor counter ================= */
+(async () => {
+  const el = document.getElementById("visitCount");
+  if (!el) return;
+  const NS = "sp-pakse-sign-2026";   // เปลี่ยนเป็นชื่อเฉพาะของคุณ (3-64 ตัวอักษร a-z 0-9 - _)
+  const KEY = "visits";
+  const BASE = "https://abacus.jasoncameron.dev";
+
+  let counted = false;
+  try { counted = localStorage.getItem("visited") === "1"; } catch (_) {}
+  const isLocal = location.protocol === "file:";   // เปิดไฟล์ในเครื่องตัวเอง ไม่นับ
+  const action = (counted || isLocal) ? "get" : "hit";
+
+  try {
+    const r = await fetch(`${BASE}/${action}/${NS}/${KEY}`);
+    if (!r.ok) throw new Error(r.status);
+    const d = await r.json();
+    el.textContent = Number(d.value).toLocaleString("en-US");
+    if (action === "hit") { try { localStorage.setItem("visited", "1"); } catch (_) {} }
+  } catch (_) {
+    el.textContent = "–";
+  }
+})();
+</script>
+</body>
+</html>
